@@ -8,14 +8,11 @@ Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     person("Shay", "Yaacoby", email = "shay66@gmail.com", comment = "https://github.com/shay-y",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
 Description: Create static/interactive parallel coordinates plot with confidence interval bands.
-Depends:
-    R (>= 3.0.0),
-    plotly (>= 4.7.1),
-    viridis,
 Imports:
     tidyverse,
     seriation
 Suggests:
+    plotly,
     knitr,
     covr,
     rmarkdown,
