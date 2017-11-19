@@ -1,4 +1,4 @@
-# ggparcoord_ci
+# ggparci
 
 
 #' @title FUNCTION_TITLE
@@ -59,8 +59,6 @@ ggparci <- function(x, group, level = 0.95,
                           ...
 ) {
 
-  library(tidyr)
-  library(ggplot2)
   x <- as.data.frame(x)
   if(missing(group)) group <- rep(1, nrow(x))
   x$group <- factor(group)
@@ -79,8 +77,6 @@ ggparci <- function(x, group, level = 0.95,
               L = sort(value)[max(qbinom(alpha/2, n(), 0.5), 1)], # the max is to deal with cases of 0
               U = sort(value)[qbinom((1-alpha/2), n(), 0.5)])
   # sort(value)[qbinom(c(.025,.975), n(), 0.5)]
-
-
 
   if(seriate) {
     measures_df <- predframe %>% select(1:3) %>% spread(key = group, value = median) %>%
@@ -132,7 +128,6 @@ ggparci <- function(x, group, level = 0.95,
 
   if(facet) p <- p + facet_grid(group ~ .)
   if(flip) p <- p + coord_flip()
-
   p
 }
 
