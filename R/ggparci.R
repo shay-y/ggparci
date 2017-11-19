@@ -50,7 +50,7 @@ ggparci <- function(x, group, level = 0.95,
                           title = "",
                           ylim,
                           include_lines = FALSE,
-                          seriate = TRUE,
+                          seriate = FALSE,
                           facet = FALSE,
                           flip = FALSE,
                           alpha_per_line = 0.1,
@@ -65,33 +65,33 @@ ggparci <- function(x, group, level = 0.95,
   alpha <- 1-level
 
   tmp <- x %>% # iris %>% # percentize %>%
-    mutate(row_id = seq_len(n())) %>%  gather(key = "measures", value = "value", -row_id, -group)
+    dplyr::mutate(row_id = seq_len(n())) %>%  tidyr::gather(key = "measures", value = "value", -row_id, -group)
   # head(tmp)
   # https://stats.stackexchange.com/a/21116/253
 
   # some ideas from here:
   # http://stackoverflow.com/questions/14033551/r-plotting-confidence-bands-with-ggplot
   predframe <-
-    tmp %>% group_by(measures, group) %>%
-    summarise(median = median(value), n = n(),
+    tmp %>% dplyr::group_by(measures, group) %>%
+    dplyr::summarise(median = median(value), n = n(),
               L = sort(value)[max(qbinom(alpha/2, n(), 0.5), 1)], # the max is to deal with cases of 0
               U = sort(value)[qbinom((1-alpha/2), n(), 0.5)])
   # sort(value)[qbinom(c(.025,.975), n(), 0.5)]
 
   if(seriate) {
-    measures_df <- predframe %>% select(1:3) %>% spread(key = group, value = median) %>%
+    measures_df <- predframe %>% dplyr::select(1:3) %>% tidyr::spread(key = group, value = median) %>%
       data.frame
     rownames(measures_df) <- measures_df[,1]
     measures_df <- measures_df[,-1]
     # TODO: control the dist measure
-    the_dist <- dist(measures_df)
-    library(seriation)
+    the_dist <- seriation::dist(measures_df)
+    # library(seriation)
     # library(dendextend)
     # seriate_dendrogram
     # TODO: control the seriate method.
     # TSP has a random element, we wish to set it to always give the same result
-    set.seed(2017-05-06)
-    ss_c <- get_order(seriate(the_dist, method = "TSP"))
+    # set.seed(2017-05-06)
+    ss_c <- seriation::get_order(seriate(the_dist, method = "TSP"))
     seriated_measures <- rownames(measures_df)[ss_c]
     tmp$measures <- factor(tmp$measures, levels = seriated_measures)
     predframe$measures <- factor(predframe$measures, levels = seriated_measures)
