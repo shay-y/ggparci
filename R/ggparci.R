@@ -2,8 +2,8 @@
 
 #' @title Parallel Coordinates Plot with Groups medians and their Confidence Intervals
 #' @description The function plots parallel coordinates (gg)plot, in which each line connects the variables medians for each group.
-#'              Confidence bands for the medians are added to each line. This allows the assessment of groups (clusters) separations.
-#'              The variables are normalized to [0,1] sclae prior to plotting.
+#'              Confidence "bands" for the medians are added to each line. This allows the assessment of groups (clusters) separations.
+#'              The variables are normalized to [0,1] scale prior to plotting.
 #' @param data a data.frame. includes the grouping variable
 #' @param columns variables to include in the plot, as character vector with columns names or as integer vector with positions. the group variable is ignored, if specified.
 #' @param groups_column grouping variable name (quoted)

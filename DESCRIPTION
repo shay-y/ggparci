@@ -1,23 +1,19 @@
 Package: ggparci
 Type: Package
-Title: Parallel coordinate plot with added confidence interval bands
+Title: Parallel Coordinates Plot with Groups medians and their Confidence Intervals
 Version: 0.1.0
 Date: 2017-11-09
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Shay", "Yaacoby", email = "shay66@gmail.com", comment = "https://github.com/shay-y",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
-Description: Create static/interactive parallel coordinates plot with confidence interval bands.
+Description: Create static/interactive parallel coordinates plot with groups medians and their confidence Intervals
 Imports:
     ggplot2,
-    seriation,
     dplyr,
-    tidyr
+    tidyr,
 Suggests:
     plotly,
-    knitr,
-    covr,
-    rmarkdown,
     testthat
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
