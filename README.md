@@ -5,7 +5,7 @@ ggparci
 Parallel Coordinates Plot with Groups medians and their Confidence Intervals
 
 The main function `ggparci` plots parallel coordinates (gg)plot, in which each line connects the variables medians for each group.  
-Confidence "bands"" for the medians are added to each line. This allows the assessment of groups (clusters) separations.  
+Confidence "bands" for the medians are added to each line. This allows the assessment of groups (clusters) separations.  
 The variables are normalized to [0,1] scale prior to plotting.  
 
 The goal is to allow the comparison of several groups across several variables, with variability assessment via the confidence intervals.  
@@ -21,7 +21,9 @@ install.packages.2('devtools')
 #install.packages('installr'); install.Rtools()
 
 devtools::install_github("ropensci/plotly") # you will probably benefit from the latest version of plotly
-devtools::install_github('talgalili/ggparci')
+
+
+devtools::install_github('HBPMedical/ggparci')
 ```
 ## Example
 
@@ -31,16 +33,18 @@ Some basic examples:
 library(ggparci)
 
 ggparci(iris, groups_column = "Species")
-ggparci(normalize(iris), groups_column = "Species") # already normalized in this version
+ggparci(normalize(iris), groups_column = "Species")
+ggparci(percentize(iris), groups_column = "Species")
 
-#select only some of the variables
+# select only some of the variables
 # plot a line for each observation
 # and dont plot the CIs
-ggparci(mtcars,columns = 3:7, groups_column = "carb", obs_lines = T, alpha_bands = 0)
+ggparci(percentize(iris),columns = 1:3, groups_column = "Species", include_obs_lines = T, alpha_ci_bands = 0)
 
 # display each group in a different facet
-ggparci(data = iris, groups_column = "Species", groups_in_facets = T)
+ggparci(data = normalize(iris), groups_column = "Species", groups_in_facets = T)
 
 # flip the plot
-p <- ggparci(data = iris, groups_column = "Species", flip_coords = T)
+ggparci(data = normalize(iris), groups_column = "Species", flip_coords = T)
+
 ```
