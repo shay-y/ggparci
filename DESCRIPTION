@@ -8,9 +8,10 @@ Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     person("Shay", "Yaacoby", email = "shay66@gmail.com", comment = "https://github.com/shay-y",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
 Description: Create static\\interactive parallel coordinates plot with groups medians and their confidence Intervals
-Imports:
+Depends:
     ggplot2,
     dplyr,
+Imports:
     tidyr
 Suggests:
     plotly,
