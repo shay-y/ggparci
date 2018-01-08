@@ -62,7 +62,7 @@ ggparci <- function(data, columns = 1:ncol(data), groups_column,
   # prepare the dataset to plot
   data_to_plot <-
     data %>%
-    as_data_frame %>%
+    tibble::as_data_frame() %>%
     dplyr::select(groups_column, numeric_columns) %>%
     # dplyr::mutate_if(is.numeric,ggparci:::normalize.default) %>%
     tibble::rowid_to_column("obs_id") %>%
@@ -157,7 +157,6 @@ ggparci <- function(data, columns = 1:ncol(data), groups_column,
   }
   return(p)
 }
-
 
 
 

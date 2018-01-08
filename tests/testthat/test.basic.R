@@ -2,6 +2,7 @@ context("run basic tests")
 
 test_that("main function works",{
 
-  p <- ggparci(iris[,-5], iris[,5])
+  library(ggplot2)
+  p <- ggparci(iris, groups_column = "Species")
   expect_s3_class(p,"ggplot")
 })
