@@ -2,73 +2,62 @@
 % Please edit documentation in R/ggparci.R
 \name{ggparci}
 \alias{ggparci}
-\title{FUNCTION_TITLE}
+\title{Parallel Coordinates Plot with Groups medians and their Confidence Intervals}
 \usage{
-ggparci(x, group, level = 0.95, lab_group = "", lab_y = "", lab_x = "",
-  title = "", ylim, include_lines = FALSE, seriate = TRUE,
-  facet = FALSE, flip = FALSE, alpha_per_line = 0.1,
-  alpha_geom_ribbon = 0.5, jitter_median_factor = 0, ...)
+ggparci(data, columns = 1:ncol(data), groups_column, conf_level = 0.95,
+  title = "", groups_in_facets = FALSE, flip_coords = FALSE,
+  include_obs_lines = FALSE, alpha_obs_lines = 0.1, alpha_ci_bands = 0.5,
+  ...)
 }
 \arguments{
-\item{x}{should be a data.frame with each column representing a data dimension}
+\item{data}{a data.frame. includes the grouping variable}
 
-\item{group}{a grouping variable}
+\item{columns}{variables to include in the plot, as character vector with columns names or as integer vector with positions. the group variable is ignored, if specified.}
 
-\item{level}{PARAM_DESCRIPTION, Default: 0.95}
+\item{groups_column}{grouping variable name (quoted)}
 
-\item{lab_group}{PARAM_DESCRIPTION, Default: ''}
+\item{conf_level}{confidence level for the bands, Default: 0.95}
 
-\item{lab_y}{PARAM_DESCRIPTION, Default: ''}
+\item{title}{Plot title, Default: ''}
 
-\item{lab_x}{PARAM_DESCRIPTION, Default: ''}
+\item{groups_in_facets}{logical. plot each group in a separate plot/facet? Default: FALSE}
 
-\item{title}{PARAM_DESCRIPTION, Default: ''}
+\item{flip_coords}{logical. make the coordinates horizontal? Default: FALSE}
 
-\item{ylim}{PARAM_DESCRIPTION}
+\item{include_obs_lines}{logical. add lines for the rows? Default: FALSE}
 
-\item{include_lines}{PARAM_DESCRIPTION, Default: FALSE}
+\item{alpha_obs_lines}{transparency factor for the lines, Default: 0.1}
 
-\item{seriate}{PARAM_DESCRIPTION, Default: TRUE}
+\item{alpha_ci_bands}{transparency factor for the confidence bands, Default: 0.5}
 
-\item{facet}{PARAM_DESCRIPTION, Default: FALSE}
-
-\item{flip}{PARAM_DESCRIPTION, Default: FALSE}
-
-\item{alpha_per_line}{PARAM_DESCRIPTION, Default: 0.1}
-
-\item{alpha_geom_ribbon}{PARAM_DESCRIPTION, Default: 0.5}
-
-\item{jitter_median_factor}{PARAM_DESCRIPTION, Default: 0}
-
-\item{...}{PARAM_DESCRIPTION}
+\item{...}{additional arguments to the plot}
 }
 \value{
-OUTPUT_DESCRIPTION
+a ggplot object
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
+The function plots parallel coordinates (gg)plot, in which each line connects the variables medians for each group.
+             Confidence "bands" for the medians are added to each line. This allows the assessment of groups (clusters) separations.
+             The variables are normalized to [0,1] scale prior to plotting.
 }
 \examples{
 
 \dontrun{
 
-ggparci(iris[,-5], iris[,5])
-ggparci(normalize(iris[,-5]), iris[,5], ylim = c(0,1))
-ggparci(percentize(iris[,-5]), iris[,5], ylim = c(0,1))
-ggparci(x = percentize(mtcars[,-10]),group =  factor(mtcars[,10]), ylim = c(0,1))
-ggparci(x = percentize(mtcars[,-9]),group =  factor(mtcars[,9]), ylim = c(0,1), lab_group = "automatic\\nvs\\nmanual")
+ggparci(iris, groups_column = "Species")
+ggparci(normalize(iris), groups_column = "Species")
+ggparci(percentize(iris), groups_column = "Species")
 
-ggparci(x = percentize(mtcars[,-9]),group =  factor(mtcars[,9]), jitter_median_factor = 0)
-ggparci(x = percentize(mtcars[,-9]),group =  factor(mtcars[,9]), jitter_median_factor = 5)
+#select only some of the variables
+# plot a line for each observation
+# and dont plot the CIs
+ggparci(percentize(iris),columns = 1:3, groups_column = "Species", include_obs_lines = T, alpha_ci_bands = 0)
 
-p <- ggparci(x = percentize(mtcars[,-9]),group =  factor(mtcars[,9]), ylim = c(0,1), lab_group = "automatic\\nvs\\nmanual", flip = TRUE)
-library(plotly)
-ggplotly(p)
+# display each group in a different facet
+ggparci(data = normalize(iris), groups_column = "Species", groups_in_facets = T)
 
+# flip the plot
+ggparci(data = normalize(iris), groups_column = "Species", flip_coords = T)
 
 }
-
 }
